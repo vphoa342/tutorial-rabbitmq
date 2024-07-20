@@ -1,0 +1,49 @@
+version: '3'
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  create-order-service:
+    build: ./service_a
+    container_name: create-order-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+
+  main-processing-service:
+    build: ./service_b
+    container_name: main-processing-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - rabbitmq
+    
+  backup-service:
+    build: ./service_d
+    container_name: backup-service
+    ports:
+      - "3003:3003"
+    depends_on:
+      - rabbitmq
+    
+  notification-service:
+    build: ./service_e
+    container_name: notification-service
+    ports:
+      - "3004:3004"
+    depends_on:
+      - rabbitmq
+    
+  monolithic-app:
+    build: ./monolithic_app
+    container_name: monolithic-app
+    ports:
+      - "3005:3005"
