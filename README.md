@@ -21,6 +21,7 @@ my-microservices/
 |   |-- Dockerfile
 |-- docker-compose.yml
 ```
+![image](https://github.com/user-attachments/assets/147fd40b-b0bb-491c-96c2-389c2ab3fba7)
 
 ## Prerequisites
 - Node.js and npm installed
